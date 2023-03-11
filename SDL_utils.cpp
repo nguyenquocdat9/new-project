@@ -2,11 +2,10 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include "SDL_utils.h"
-
+#include "Entity.h"
 //*****************************************************
 // Các hàm chung về khởi tạo và huỷ SDL
-void logSDLError(std::ostream& os,
-                 const std::string &msg, bool fatal)
+void logSDLError(std::ostream& os,const std::string &msg, bool fatal)
 {
     os << msg << " Error: " << SDL_GetError() << std::endl;
     if (fatal) {
@@ -15,8 +14,7 @@ void logSDLError(std::ostream& os,
     }
 }
 
-void initSDL(SDL_Window* &window, SDL_Renderer* &renderer,
-	int screenWidth, int screenHeight, const char* windowTitle)
+void initSDL(SDL_Window* &window, SDL_Renderer* &renderer,int screenWidth, int screenHeight, const char* windowTitle)
 {
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
         logSDLError(std::cout, "SDL_Init", true);
@@ -55,4 +53,6 @@ void waitUntilKeyPressed()
         SDL_Delay(100);
     }
 }
+
+
 
