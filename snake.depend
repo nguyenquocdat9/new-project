@@ -1,0 +1,19 @@
+# depslib dependency file v1.0
+1678462820 source:d:\code\snake\keyboard.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_utils.h"
+
+1678461110 d:\code\snake\sdl_utils.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+
+1678461146 source:d:\code\snake\sdl_utils.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_utils.h"
+
