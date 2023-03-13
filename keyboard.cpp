@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
@@ -17,10 +16,8 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, const SDL_Rect& f
     SDL_Window* window;
     SDL_Renderer* renderer;
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
-
     // Your code here
     SDL_Event e;
-
     // Định nghĩa toạ độ ban đầu và kích cỡ hình chữ nhật
     SDL_Rect filled_rect;
     filled_rect.x = SCREEN_WIDTH / 2;
@@ -31,13 +28,11 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, const SDL_Rect& f
     int step = 6;
     // Xoá toàn bộ màn hình và vẽ
     refreshScreen(window, renderer, filled_rect);
-
     while (true) {
         // Đợi 10 mili giây
         SDL_Delay(10);
         // Nếu không có sự kiện gì thì tiếp tục trở về đầu vòng lặp
           if ( SDL_WaitEvent(&e) == 0) continue;
-
         // Nếu sự kiện là kết thúc (như đóng cửa sổ) thì thoát khỏi vòng lặp
           if (e.type == SDL_QUIT) break;
         // Nếu có một phím được nhấn, thì xét phím đó là gì để xử lý tiếp
@@ -58,11 +53,9 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, const SDL_Rect& f
         		default: break;
 			}
         }
-
             // Xoá toàn bộ màn hình và vẽ lại
             refreshScreen(window, renderer, filled_rect);
         }
-
     quitSDL(window, renderer);
     return 0;
 }
@@ -75,11 +68,9 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, const SDL_Rect& f
     //SDL_RenderClear(renderer);
     SDL_Texture* background = loadTexture("background.jpg", renderer);
     SDL_RenderCopy(renderer, background, NULL, NULL);
-
     // Đặt màu vẽ về trắng và vẽ hình chữ nhật
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);   // white
     SDL_RenderFillRect(renderer, &filled_rect);
-
     // Dùng lệnh hiển thị (đưa) hình đã vẽ ra mành hình
    //Khi thông thường chạy với môi trường bình thường ở nhà
     SDL_RenderPresent(renderer);
@@ -87,3 +78,5 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, const SDL_Rect& f
    //SDL_UpdateWindowSurface(window);
 }
 */
+
+

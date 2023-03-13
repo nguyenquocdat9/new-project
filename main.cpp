@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
 
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, background, NULL, NULL);
-        SDL_RenderCopy(renderer, obstacle, , );
+        render(meteor, renderer);
         SDL_RenderPresent(renderer);
     }
 }
@@ -56,4 +56,3 @@ SDL_Texture* loadTexture(string path, SDL_Renderer* renderer)
     }
     return newTexture;
 }
-

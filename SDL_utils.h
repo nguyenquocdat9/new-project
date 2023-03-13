@@ -22,6 +22,7 @@ void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
 
 void waitUntilKeyPressed();
 
+void render(Entity& p_entity, SDL_Renderer* renderer);
 
 
 #endif // UTILS_H_
