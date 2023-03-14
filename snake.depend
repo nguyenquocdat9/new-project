@@ -11,7 +11,7 @@
 	<SDL_image.h>
 	"Entity.h"
 
-1678686188 source:d:\code\snake\sdl_utils.cpp
+1678709847 source:d:\code\snake\sdl_utils.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -23,7 +23,7 @@
 	<SDL.h>
 	"SDL_utils.h"
 
-1678685356 source:d:\code\snake\main.cpp
+1678711381 source:d:\code\snake\main.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>

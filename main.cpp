@@ -18,10 +18,11 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer;
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
 
+    int x = 100, y = 200;
     SDL_Texture* background = loadTexture("background.jpg", renderer);
-    SDL_Texture* obstacle = loadTexture("meteor1.png", renderer);
-    Entity meteor(100, 100, obstacle);
-
+    SDL_Texture* obstacle = loadTexture("meteor.png", renderer);
+    SDL_Texture* spaceship = loadTexture("spaceship.png", renderer);
+    Entity Ship(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, spaceship);
     bool GameIsRunning = true;
     SDL_Event e;
 
@@ -34,11 +35,13 @@ int main(int argc, char* argv[])
                 GameIsRunning = false;
             }
         }
-
+        Entity meteor(x, y, obstacle);
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, background, NULL, NULL);
         render(meteor, renderer);
+        render(Ship, renderer);
         SDL_RenderPresent(renderer);
+        x++;
     }
 }
 
