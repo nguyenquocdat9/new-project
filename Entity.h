@@ -14,6 +14,7 @@ public:
     float GetY();
     SDL_Texture* GetTex();
     SDL_Rect GetCurrentFrame();
+
 private:
     float x, y;
     SDL_Rect CurrentFrame;

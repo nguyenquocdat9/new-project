@@ -10,7 +10,7 @@
 
 const int SCREEN_WIDTH = 1500;
 const int SCREEN_HEIGHT = 800;
-const char WINDOW_TITLE[] = "Snake";
+const char WINDOW_TITLE[] = "Survive";
 
 void logSDLError(std::ostream& os,
                  const std::string &msg, bool fatal);

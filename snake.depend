@@ -5,7 +5,7 @@
 	<SDL_image.h>
 	"SDL_utils.h"
 
-1678691214 d:\code\snake\sdl_utils.h
+1679213163 d:\code\snake\sdl_utils.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -23,20 +23,24 @@
 	<SDL.h>
 	"SDL_utils.h"
 
-1678865722 source:d:\code\snake\main.cpp
+1679222598 source:d:\code\snake\main.cpp
 	<iostream>
+	<SDL.h>
+	<iostream>
+	<cstdlib>
+	<ctime>
 	<SDL.h>
 	<SDL_image.h>
 	"SDL_utils.h"
 	"Entity.h"
 
-1678690898 source:d:\code\snake\entity.cpp
+1679215500 source:d:\code\snake\entity.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	"Entity.h"
 
-1678690914 d:\code\snake\entity.h
+1679213135 d:\code\snake\entity.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
