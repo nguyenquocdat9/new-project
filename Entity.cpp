@@ -31,3 +31,22 @@ SDL_Rect Entity::GetCurrentFrame()
     return CurrentFrame;
 }
 
+void render(Entity& p_entity, SDL_Renderer* renderer)
+{
+    SDL_Rect src;
+    src.x = p_entity.GetCurrentFrame().x;
+    src.y = p_entity.GetCurrentFrame().y;
+    src.w = p_entity.GetCurrentFrame().w;
+    src.h = p_entity.GetCurrentFrame().h;
+
+    SDL_Rect dst;
+    dst.x = p_entity.GetX();
+    dst.y = p_entity.GetY();
+    dst.w = p_entity.GetCurrentFrame().w;
+    dst.h = p_entity.GetCurrentFrame().h;
+    cerr << p_entity.type ;
+    cerr << p_entity.GetX() << " " << p_entity.GetY() << endl;
+
+    SDL_RenderCopy(renderer, p_entity.GetTex(), &src, &dst);
+}
+

@@ -5,7 +5,8 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
-
+#include <string>
+using namespace std;
 class Entity
 {
 public:
@@ -14,11 +15,14 @@ public:
     float GetY();
     SDL_Texture* GetTex();
     SDL_Rect GetCurrentFrame();
+    string type = "Entity";
 
 private:
     float x, y;
     SDL_Rect CurrentFrame;
     SDL_Texture* tex;
 };
+void render(Entity& p_entity, SDL_Renderer* renderer);
+
 
 #endif // ENTITY_H

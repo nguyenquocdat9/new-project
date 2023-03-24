@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     SDL_Texture* spaceship = loadTexture("D:/code/snake/image/spaceship.png", renderer);
     // generate value
     int Xship = SCREEN_WIDTH / 2, Yship = SCREEN_HEIGHT / 2;
-    int step = 6;
+    int step = 5;
     bool GameIsRunning = true;
     SDL_Event e;
 
@@ -33,13 +33,16 @@ int main(int argc, char* argv[])
     int y = (rand() % 696) + 1;
 
 
+
     while(GameIsRunning)
     {
-        Entity asteroid(x, y, obstacle);
+        Entity *asteroid = new Entity(x, y, obstacle);
+        asteroid->type = "asteroid";
+        // check if asteroid is rendered
         Entity Ship(Xship, Yship, spaceship);
-
+        Ship.type = "ship";
         // Đợi 10 mili giây
-        SDL_Delay(10);
+        SDL_Delay(3);
 
         // Nếu không có sự kiện gì thì tiếp tục trở về đầu vòng lặp
           while( SDL_PollEvent(&e) != 0 ){
@@ -65,9 +68,12 @@ int main(int argc, char* argv[])
            }
           }
         x += 4;
-        refreshScreen(window, renderer, Ship, asteroid);
+        refreshScreen(window, renderer, Ship, *asteroid);
+        delete asteroid;
 
     }
+
+
     return 0;
 }
 
@@ -96,7 +102,8 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, Entity& Ship, Ent
 
     render(Ship, renderer);
     // ve vat the con tau
-    render(asteroid, renderer);
+    render(asteroid,renderer);
+
     SDL_RenderPresent(renderer);
     // hien thi man hinh
 }

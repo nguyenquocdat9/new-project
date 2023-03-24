@@ -55,20 +55,3 @@ void waitUntilKeyPressed()
 }
 
 
-void render(Entity& p_entity, SDL_Renderer* renderer)
-{
-    SDL_Rect src;
-    src.x = p_entity.GetCurrentFrame().x;
-    src.y = p_entity.GetCurrentFrame().y;
-    src.w = p_entity.GetCurrentFrame().w;
-    src.h = p_entity.GetCurrentFrame().h;
-
-    SDL_Rect dst;
-    dst.x = p_entity.GetX();
-    dst.y = p_entity.GetY();
-    dst.w = p_entity.GetCurrentFrame().w;
-    dst.h = p_entity.GetCurrentFrame().h;
-
-    SDL_RenderCopy(renderer, p_entity.GetTex(), &src, &dst);
-}
-
