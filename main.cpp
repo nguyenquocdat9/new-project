@@ -10,7 +10,7 @@
 
 using namespace std;
 
-void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, Entity& Ship, Entity& asteroid);
+void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, Entity& Ship, Entity& asteroid, SDL_Texture* background);
 
 SDL_Texture* loadTexture(string path, SDL_Renderer* renderer);
 
@@ -20,6 +20,7 @@ int main(int argc, char* argv[])
     SDL_Window* window;
     SDL_Renderer* renderer;
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
+    SDL_Texture* background = loadTexture("D:/code/snake/image/background.jpg", renderer);
     SDL_Texture* obstacle = loadTexture("D:/code/snake/image/meteor.png", renderer);
     SDL_Texture* spaceship = loadTexture("D:/code/snake/image/spaceship.png", renderer);
     // generate value
@@ -68,8 +69,14 @@ int main(int argc, char* argv[])
            }
           }
         x += 4;
-        refreshScreen(window, renderer, Ship, *asteroid);
-        delete asteroid;
+        refreshScreen(window, renderer, Ship, *asteroid, background);
+        if(x >= 1500)
+        {
+            delete asteroid;
+            x = 0;
+            y = (rand() % 696) + 1;
+        }
+
 
     }
 
@@ -92,11 +99,11 @@ SDL_Texture* loadTexture(string path, SDL_Renderer* renderer)
     return newTexture;
 }
 
-void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, Entity& Ship, Entity& asteroid)
+void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, Entity& Ship, Entity& asteroid, SDL_Texture* background)
 {
     SDL_RenderClear(renderer);
 
-    SDL_Texture* background = loadTexture("D:/code/snake/image/background.jpg", renderer);
+
     SDL_RenderCopy(renderer, background, NULL, NULL);
     // ve background
 
