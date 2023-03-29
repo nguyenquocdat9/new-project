@@ -8,6 +8,8 @@
 #include <SDL_image.h>
 #include "Entity.h"
 
+using namespace std;
+
 const int SCREEN_WIDTH = 1500;
 const int SCREEN_HEIGHT = 800;
 const char WINDOW_TITLE[] = "Survive";
@@ -23,5 +25,6 @@ void quitSDL(SDL_Window* window, SDL_Renderer* renderer);
 void waitUntilKeyPressed();
 
 
+SDL_Texture* loadTexture(string path, SDL_Renderer* renderer);
 
 #endif // UTILS_H_

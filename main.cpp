@@ -7,12 +7,11 @@
 #include <SDL_image.h>
 #include "SDL_utils.h"
 #include "Entity.h"
+#include "GameMechanic.h"
 
 using namespace std;
 
-void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, Entity& Ship, Entity& asteroid, SDL_Texture* background);
-
-SDL_Texture* loadTexture(string path, SDL_Renderer* renderer);
+void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4);
 
 int main(int argc, char* argv[])
 {
@@ -30,20 +29,33 @@ int main(int argc, char* argv[])
     SDL_Event e;
 
     srand((unsigned int) time(NULL));
-    int x = 0;
-    int y = (rand() % 696) + 1;
 
-
+    int x1 = -(rand() % 600) + 1;
+    int y1 = (rand() % 696) + 1;
+    int x2 = (rand() % 600) + 1501;
+    int y2 = (rand() % 696) + 1;
+    int x3 = -(rand() % 600) + 1;
+    int y3 = (rand() % 696) + 1;
+    int x4 = (rand() % 600) + 1501;
+    int y4 = (rand() % 696) + 1;
+    // 1, 3 spawn trai
+    // 2, 4 spawn phai
 
     while(GameIsRunning)
     {
-        Entity *asteroid = new Entity(x, y, obstacle);
-        asteroid->type = "asteroid";
+        Entity *asteroid1 = new Entity(x1, y1, obstacle);
+        asteroid1->type = "asteroid1";
+        Entity *asteroid2 = new Entity(x2, y2, obstacle);
+        asteroid2->type = "asteroid2";
+        Entity *asteroid3 = new Entity(x3, y3, obstacle);
+        asteroid3->type = "asteroid3";
+        Entity *asteroid4 = new Entity(x4, y4, obstacle);
+        asteroid4->type = "asteroid4";
         // check if asteroid is rendered
         Entity Ship(Xship, Yship, spaceship);
         Ship.type = "ship";
         // Đợi 10 mili giây
-        SDL_Delay(3);
+        SDL_Delay(10);
 
         // Nếu không có sự kiện gì thì tiếp tục trở về đầu vòng lặp
           while( SDL_PollEvent(&e) != 0 ){
@@ -68,38 +80,41 @@ int main(int argc, char* argv[])
 			}
            }
           }
-        x += 4;
-        refreshScreen(window, renderer, Ship, *asteroid, background);
-        if(x >= 1500)
+        x1 += 4;
+        x2 -= 4;
+        x3 += 4;
+        x4 -= 4;
+        refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4);
+        if(x1 >= 1500)
         {
-            delete asteroid;
-            x = 0;
-            y = (rand() % 696) + 1;
+            delete asteroid1;
+            x1 = -(rand() % 600) + 1;;
+            y1 = (rand() % 696) + 1;
         }
-
-
+        if(x2 <= 0)
+        {
+            delete asteroid2;
+            x2 = (rand() % 600) + 1501;
+            y2 = (rand() % 696) + 1;
+        }
+        if(x3 >= 1500)
+        {
+            delete asteroid3;
+            x3 = -(rand() % 600) + 1;;
+            y3 = (rand() % 696) + 1;
+        }
+        if(x4 <= 0)
+        {
+            delete asteroid4;
+            x4 = (rand() % 600) + 1501;
+            y4 = (rand() % 696) + 1;
+        }
     }
-
-
+    quitSDL(window, renderer);
     return 0;
 }
 
-SDL_Texture* loadTexture(string path, SDL_Renderer* renderer)
-{
-    SDL_Texture* newTexture = nullptr;
-    SDL_Surface* loadedSurface = IMG_Load( path.c_str() );
-    if(loadedSurface == nullptr)
-        cout << "Unable to load image" << path << "SDL_image Error: " << SDL_GetError() << endl;
-    else {
-        newTexture = SDL_CreateTextureFromSurface(renderer, loadedSurface);
-        if(newTexture == nullptr)
-            cout << "Unable to create texture from " << path << " SDL Error: " << SDL_GetError() << endl;
-        SDL_FreeSurface(loadedSurface);
-    }
-    return newTexture;
-}
-
-void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, Entity& Ship, Entity& asteroid, SDL_Texture* background)
+void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4)
 {
     SDL_RenderClear(renderer);
 
@@ -109,8 +124,10 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, Entity& Ship, Ent
 
     render(Ship, renderer);
     // ve vat the con tau
-    render(asteroid,renderer);
-
+    render(asteroid1,renderer);
+    render(asteroid2,renderer);
+    render(asteroid3,renderer);
+    render(asteroid4,renderer);
     SDL_RenderPresent(renderer);
     // hien thi man hinh
 }

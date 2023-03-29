@@ -5,13 +5,13 @@
 	<SDL_image.h>
 	"SDL_utils.h"
 
-1679632017 d:\code\snake\sdl_utils.h
+1679677018 d:\code\snake\sdl_utils.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
 	"Entity.h"
 
-1679632017 source:d:\code\snake\sdl_utils.cpp
+1679677018 source:d:\code\snake\sdl_utils.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
@@ -23,7 +23,7 @@
 	<SDL.h>
 	"SDL_utils.h"
 
-1679634983 source:d:\code\snake\main.cpp
+1680019218 source:d:\code\snake\main.cpp
 	<iostream>
 	<SDL.h>
 	<iostream>
@@ -33,6 +33,7 @@
 	<SDL_image.h>
 	"SDL_utils.h"
 	"Entity.h"
+	"GameMechanic.h"
 
 1679632017 source:d:\code\snake\entity.cpp
 	<iostream>
@@ -45,4 +46,13 @@
 	<SDL.h>
 	<SDL_image.h>
 	<string>
+
+1679927708 source:d:\code\snake\gamemechanic.cpp
+	<cstdlib>
+	<ctime>
+
+1679927448 d:\code\snake\gamemechanic.h
+	<iostream>
+	<cstdlib>
+	<ctime>
 
