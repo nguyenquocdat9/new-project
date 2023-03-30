@@ -1,0 +1,106 @@
+# depslib dependency file v1.0
+1678690988 source:d:\code\snake\keyboard.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_utils.h"
+
+1679677018 d:\code\snake\sdl_utils.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"Entity.h"
+
+1680103924 source:d:\code\snake\sdl_utils.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_utils.h"
+	"Entity.h"
+
+1490344001 source:d:\code\snake\mouse.cpp
+	<iostream>
+	<SDL.h>
+	"SDL_utils.h"
+
+1680105873 source:d:\code\snake\main.cpp
+	<iostream>
+	<SDL.h>
+	<iostream>
+	<cstdlib>
+	<ctime>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_utils.h"
+	"Entity.h"
+	"GameMechanic.h"
+
+1679632017 source:d:\code\snake\entity.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"Entity.h"
+
+1679632017 d:\code\snake\entity.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+
+1680103472 source:d:\code\snake\gamemechanic.cpp
+	<SDL.h>
+	<SDL_image.h>
+	"GameMechanic.h"
+
+1680104022 d:\code\snake\gamemechanic.h
+	<iostream>
+	<cstdlib>
+	<ctime>
+
+1679632017 source:d:\code\survive\entity.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"Entity.h"
+
+1679632017 d:\code\survive\entity.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+
+1680164490 source:d:\code\survive\gamemechanic.cpp
+	<SDL.h>
+	<SDL_image.h>
+	"GameMechanic.h"
+
+1680104022 d:\code\survive\gamemechanic.h
+	<iostream>
+	<cstdlib>
+	<ctime>
+
+1680193117 source:d:\code\survive\main.cpp
+	<iostream>
+	<SDL.h>
+	<iostream>
+	<cstdlib>
+	<ctime>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_utils.h"
+	"Entity.h"
+	"GameMechanic.h"
+
+1679677018 d:\code\survive\sdl_utils.h
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"Entity.h"
+
+1680103924 source:d:\code\survive\sdl_utils.cpp
+	<iostream>
+	<SDL.h>
+	<SDL_image.h>
+	"SDL_utils.h"
+	"Entity.h"
+

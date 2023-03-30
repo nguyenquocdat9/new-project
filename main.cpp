@@ -19,17 +19,19 @@ int main(int argc, char* argv[])
     SDL_Window* window;
     SDL_Renderer* renderer;
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
-    SDL_Texture* background = loadTexture("D:/code/snake/image/background.jpg", renderer);
-    SDL_Texture* obstacle = loadTexture("D:/code/snake/image/meteor.png", renderer);
-    SDL_Texture* spaceship = loadTexture("D:/code/snake/image/spaceship.png", renderer);
+    SDL_Texture* background = loadTexture("D:/code/survive/image/background.jpg", renderer);
+    SDL_Texture* obstacle = loadTexture("D:/code/survive/image/meteor.png", renderer);
+    SDL_Texture* spaceship = loadTexture("D:/code/survive/image/spaceship.png", renderer);
+    SDL_Texture* GameOverScreen = loadTexture("D:/code/survive/image/gameover.jpg", renderer);
     // generate value
-    int Xship = SCREEN_WIDTH / 2, Yship = SCREEN_HEIGHT / 2;
     int step = 5;
     bool GameIsRunning = true;
+    bool QuitGame = true;
     SDL_Event e;
 
     srand((unsigned int) time(NULL));
-
+  while(QuitGame)
+  {
     int x1 = -(rand() % 600) + 1;
     int y1 = (rand() % 696) + 1;
     int x2 = (rand() % 600) + 1501;
@@ -40,6 +42,7 @@ int main(int argc, char* argv[])
     int y4 = (rand() % 696) + 1;
     // 1, 3 spawn trai
     // 2, 4 spawn phai
+    int Xship = SCREEN_WIDTH / 2, Yship = SCREEN_HEIGHT / 2;
 
     while(GameIsRunning)
     {
@@ -109,7 +112,57 @@ int main(int argc, char* argv[])
             x4 = (rand() % 600) + 1501;
             y4 = (rand() % 696) + 1;
         }
+        if(CheckCollision(Xship, Yship, x1, y1))
+        {
+            delete asteroid1;
+            delete asteroid2;
+            delete asteroid3;
+            delete asteroid4;
+            GameIsRunning = false;
+            cout << "collided" << endl;
+        }
+        if(CheckCollision(Xship, Yship, x2, y2))
+        {
+            delete asteroid1;
+            delete asteroid2;
+            delete asteroid3;
+            delete asteroid4;
+            GameIsRunning = false;
+            cout << "collided" << endl;
+        }
+        if(CheckCollision(Xship, Yship, x3, y3))
+        {
+            delete asteroid1;
+            delete asteroid2;
+            delete asteroid3;
+            delete asteroid4;
+            GameIsRunning = false;
+            cout << "collided" << endl;
+        }
+        if(CheckCollision(Xship, Yship, x4, y4))
+        {
+            delete asteroid1;
+            delete asteroid2;
+            delete asteroid3;
+            delete asteroid4;
+            GameIsRunning = false;
+            cout << "collided" << endl;
+        }
     }
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer, GameOverScreen, NULL, NULL);
+    SDL_RenderPresent(renderer);
+    while(SDL_PollEvent(&e) != 0)
+    {
+        if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+        {
+           if(e.button.x >= 140 && e.button.x <= 430 && e.button.y >= 615 && e.button.y <= 735) GameIsRunning = true; // play again
+           else if(e.button.x >= 1030 && e.button.x <= 1285 && e.button.y >= 615 && e.button.y <= 735) QuitGame = false; // quit game
+        }
+    }
+  }
+    // button NO 1030 -> 1290 ; 615 -> 750
+    // button YES 140 -> 435 ; 615 -> 750
     quitSDL(window, renderer);
     return 0;
 }
