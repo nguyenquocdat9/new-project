@@ -79,7 +79,7 @@
 	<cstdlib>
 	<ctime>
 
-1680193117 source:d:\code\survive\main.cpp
+1680240874 source:d:\code\survive\main.cpp
 	<iostream>
 	<SDL.h>
 	<iostream>
@@ -87,20 +87,23 @@
 	<ctime>
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
 	"SDL_utils.h"
 	"Entity.h"
 	"GameMechanic.h"
 
-1679677018 d:\code\survive\sdl_utils.h
+1680240583 d:\code\survive\sdl_utils.h
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
 	"Entity.h"
 
-1680103924 source:d:\code\survive\sdl_utils.cpp
+1680240583 source:d:\code\survive\sdl_utils.cpp
 	<iostream>
 	<SDL.h>
 	<SDL_image.h>
+	<SDL_mixer.h>
 	"SDL_utils.h"
 	"Entity.h"
 

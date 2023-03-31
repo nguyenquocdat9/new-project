@@ -1,6 +1,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include "SDL_utils.h"
 #include "Entity.h"
 //*****************************************************
@@ -40,6 +41,7 @@ void quitSDL(SDL_Window* window, SDL_Renderer* renderer)
 {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+	Mix_CloseAudio();
     SDL_Quit();
 }
 

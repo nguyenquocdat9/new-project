@@ -5,6 +5,7 @@
 #include <ctime>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include "SDL_utils.h"
 #include "Entity.h"
 #include "GameMechanic.h"
@@ -15,7 +16,6 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* back
 
 int main(int argc, char* argv[])
 {
-
     SDL_Window* window;
     SDL_Renderer* renderer;
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
@@ -23,15 +23,20 @@ int main(int argc, char* argv[])
     SDL_Texture* obstacle = loadTexture("D:/code/survive/image/meteor.png", renderer);
     SDL_Texture* spaceship = loadTexture("D:/code/survive/image/spaceship.png", renderer);
     SDL_Texture* GameOverScreen = loadTexture("D:/code/survive/image/gameover.jpg", renderer);
+    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
+    Mix_Music *Theme = NULL;
+    Theme = Mix_LoadMUS("PurpleRain.mp3");
     // generate value
-    int step = 5;
+    //int step = 7;
     bool GameIsRunning = true;
     bool QuitGame = true;
     SDL_Event e;
 
     srand((unsigned int) time(NULL));
+
   while(QuitGame)
   {
+    int Xship = SCREEN_WIDTH / 2, Yship = SCREEN_HEIGHT / 2;
     int x1 = -(rand() % 600) + 1;
     int y1 = (rand() % 696) + 1;
     int x2 = (rand() % 600) + 1501;
@@ -42,10 +47,11 @@ int main(int argc, char* argv[])
     int y4 = (rand() % 696) + 1;
     // 1, 3 spawn trai
     // 2, 4 spawn phai
-    int Xship = SCREEN_WIDTH / 2, Yship = SCREEN_HEIGHT / 2;
-
+    Mix_PlayMusic(Theme, 100);
+    int SDL_ShowCursor(SDL_DISABLE);
     while(GameIsRunning)
     {
+
         Entity *asteroid1 = new Entity(x1, y1, obstacle);
         asteroid1->type = "asteroid1";
         Entity *asteroid2 = new Entity(x2, y2, obstacle);
@@ -65,15 +71,17 @@ int main(int argc, char* argv[])
         // Nếu sự kiện là kết thúc (như đóng cửa sổ) thì thoát khỏi vòng lặp
           if (e.type == SDL_QUIT) GameIsRunning = false;
         // Nếu có một phím được nhấn, thì xét phím đó là gì để xử lý tiếp
-          if (e.type == SDL_KEYDOWN) {
+          /*if (e.type == SDL_KEYDOWN) {
         	switch (e.key.keysym.sym) {
         		case SDLK_ESCAPE: break; // Nếu nhấn phìm ESC thì thoát khỏi vòng lặp
         		// Nếu phím mũi tên trái, dịch sang trái
     	        // (cộng chiều rộng, trừ bước, rồi lấy phần dư để giá trị luôn dương, và hiệu ứng quay vòng)
-        		case SDLK_LEFT: Xship = (Xship + SCREEN_WIDTH - step) % SCREEN_WIDTH;
+        		case SDLK_LEFT:
+        		    Xship = (Xship + SCREEN_WIDTH - step) % SCREEN_WIDTH;
         			break;
         		// Tương tự với dịch phải, xuống và lên
-            	case SDLK_RIGHT: Xship = (Xship + step) % SCREEN_WIDTH;
+            	case SDLK_RIGHT:
+            	    Xship = (Xship + step) % SCREEN_WIDTH;
             		break;
             	case SDLK_DOWN: Yship = (Yship + step) % SCREEN_HEIGHT;
 					break;
@@ -81,12 +89,17 @@ int main(int argc, char* argv[])
             		break;
         		default: break;
 			}
-           }
+           }*/
+           // incase want to return to keyboard control
+          if(e.type == SDL_MOUSEMOTION)
+          {
+              SDL_GetMouseState(&Xship, &Yship);
           }
-        x1 += 4;
-        x2 -= 4;
-        x3 += 4;
-        x4 -= 4;
+        }
+        x1 += 8;
+        x2 -= 8;
+        x3 += 8;
+        x4 -= 8;
         refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4);
         if(x1 >= 1500)
         {
