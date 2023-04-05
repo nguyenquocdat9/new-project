@@ -11,6 +11,8 @@
 
 using namespace std;
 
+const int FPS = 60;
+const int DELTA = 1000 / FPS;
 const int SCREEN_WIDTH = 1500;
 const int SCREEN_HEIGHT = 800;
 const char WINDOW_TITLE[] = "Survive";

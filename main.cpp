@@ -19,10 +19,12 @@ int main(int argc, char* argv[])
     SDL_Window* window;
     SDL_Renderer* renderer;
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
-    SDL_Texture* background = loadTexture("D:/code/survive/image/background.jpg", renderer);
-    SDL_Texture* obstacle = loadTexture("D:/code/survive/image/meteor.png", renderer);
-    SDL_Texture* spaceship = loadTexture("D:/code/survive/image/spaceship.png", renderer);
-    SDL_Texture* GameOverScreen = loadTexture("D:/code/survive/image/gameover.jpg", renderer);
+    SDL_Texture* background = loadTexture("image/background.jpg", renderer);
+    SDL_Texture* obstacle = loadTexture("image/meteor.png", renderer);
+    SDL_Texture* barrier = loadTexture("image/shield.png", renderer);
+    SDL_Texture* spaceship = loadTexture("image/spaceship.png", renderer);
+    SDL_Texture* spaceshipShield = loadTexture("image/spaceshipwithshield.png", renderer);
+    SDL_Texture* GameOverScreen = loadTexture("image/gameover.jpg", renderer);
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
     Mix_Music *Theme = NULL;
     Theme = Mix_LoadMUS("PurpleRain.mp3");
@@ -31,8 +33,8 @@ int main(int argc, char* argv[])
     bool GameIsRunning = true;
     bool QuitGame = true;
     SDL_Event e;
-
     srand((unsigned int) time(NULL));
+    SDL_Texture* ShipPhoto;
 
   while(QuitGame)
   {
@@ -48,10 +50,11 @@ int main(int argc, char* argv[])
     // 1, 3 spawn trai
     // 2, 4 spawn phai
     Mix_PlayMusic(Theme, 100);
-    int SDL_ShowCursor(SDL_DISABLE);
+
     while(GameIsRunning)
     {
-
+        ShipPhoto = spaceship;
+        int start = SDL_GetTicks();
         Entity *asteroid1 = new Entity(x1, y1, obstacle);
         asteroid1->type = "asteroid1";
         Entity *asteroid2 = new Entity(x2, y2, obstacle);
@@ -61,10 +64,9 @@ int main(int argc, char* argv[])
         Entity *asteroid4 = new Entity(x4, y4, obstacle);
         asteroid4->type = "asteroid4";
         // check if asteroid is rendered
-        Entity Ship(Xship, Yship, spaceship);
+        Entity Ship(Xship, Yship, ShipPhoto);
         Ship.type = "ship";
         // Đợi 10 mili giây
-        SDL_Delay(10);
 
         // Nếu không có sự kiện gì thì tiếp tục trở về đầu vòng lặp
           while( SDL_PollEvent(&e) != 0 ){
@@ -161,6 +163,10 @@ int main(int argc, char* argv[])
             GameIsRunning = false;
             cout << "collided" << endl;
         }
+
+        //FPS stabilizer
+        int delta = SDL_GetTicks() - start;
+        if(delta < DELTA) SDL_Delay(DELTA - delta);
     }
     SDL_RenderClear(renderer);
     SDL_RenderCopy(renderer, GameOverScreen, NULL, NULL);

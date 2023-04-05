@@ -14,9 +14,10 @@ bool CheckColisionAxisY(int y1, int y2)
     else return false;
 }
 
-// width = 100, height = 104
+// width = 80, height = 90
 bool CheckCollision(int x1, int y1, int x2, int y2)
 {
     if(CheckColisionAxisX(x1, x2) && CheckColisionAxisY(y1, y2)) return true;
     else return false;
 }
+
