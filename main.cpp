@@ -21,10 +21,13 @@ int main(int argc, char* argv[])
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SDL_Texture* background = loadTexture("image/background.jpg", renderer);
     SDL_Texture* obstacle = loadTexture("image/meteor.png", renderer);
+    //spaceship related
     SDL_Texture* barrier = loadTexture("image/shield.png", renderer);
     SDL_Texture* spaceship = loadTexture("image/spaceship.png", renderer);
     SDL_Texture* spaceshipShield = loadTexture("image/spaceshipwithshield.png", renderer);
+    //menu
     SDL_Texture* GameOverScreen = loadTexture("image/gameover.jpg", renderer);
+    //music
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
     Mix_Music *Theme = NULL;
     Theme = Mix_LoadMUS("PurpleRain.mp3");
@@ -38,6 +41,8 @@ int main(int argc, char* argv[])
 
   while(QuitGame)
   {
+    // 1, 3 spawn trai
+    // 2, 4 spawn phai
     int Xship = SCREEN_WIDTH / 2, Yship = SCREEN_HEIGHT / 2;
     int x1 = -(rand() % 600) + 1;
     int y1 = (rand() % 696) + 1;
@@ -47,14 +52,13 @@ int main(int argc, char* argv[])
     int y3 = (rand() % 696) + 1;
     int x4 = (rand() % 600) + 1501;
     int y4 = (rand() % 696) + 1;
-    // 1, 3 spawn trai
-    // 2, 4 spawn phai
-    Mix_PlayMusic(Theme, 100);
+    //music
+    Mix_PlayMusic(Theme, 30);
 
     while(GameIsRunning)
     {
-        ShipPhoto = spaceship;
         int start = SDL_GetTicks();
+        // check if asteroid is rendered
         Entity *asteroid1 = new Entity(x1, y1, obstacle);
         asteroid1->type = "asteroid1";
         Entity *asteroid2 = new Entity(x2, y2, obstacle);
@@ -63,10 +67,10 @@ int main(int argc, char* argv[])
         asteroid3->type = "asteroid3";
         Entity *asteroid4 = new Entity(x4, y4, obstacle);
         asteroid4->type = "asteroid4";
-        // check if asteroid is rendered
+        //check render spaceship
+        ShipPhoto = spaceship;
         Entity Ship(Xship, Yship, ShipPhoto);
         Ship.type = "ship";
-        // Đợi 10 mili giây
 
         // Nếu không có sự kiện gì thì tiếp tục trở về đầu vòng lặp
           while( SDL_PollEvent(&e) != 0 ){
@@ -103,63 +107,47 @@ int main(int argc, char* argv[])
         x3 += 8;
         x4 -= 8;
         refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4);
+        delete asteroid1;
+        delete asteroid2;
+        delete asteroid3;
+        delete asteroid4;
         if(x1 >= 1500)
         {
-            delete asteroid1;
             x1 = -(rand() % 600) + 1;;
             y1 = (rand() % 696) + 1;
         }
         if(x2 <= 0)
         {
-            delete asteroid2;
             x2 = (rand() % 600) + 1501;
             y2 = (rand() % 696) + 1;
         }
         if(x3 >= 1500)
         {
-            delete asteroid3;
             x3 = -(rand() % 600) + 1;;
             y3 = (rand() % 696) + 1;
         }
         if(x4 <= 0)
         {
-            delete asteroid4;
             x4 = (rand() % 600) + 1501;
             y4 = (rand() % 696) + 1;
         }
         if(CheckCollision(Xship, Yship, x1, y1))
         {
-            delete asteroid1;
-            delete asteroid2;
-            delete asteroid3;
-            delete asteroid4;
             GameIsRunning = false;
             cout << "collided" << endl;
         }
         if(CheckCollision(Xship, Yship, x2, y2))
         {
-            delete asteroid1;
-            delete asteroid2;
-            delete asteroid3;
-            delete asteroid4;
             GameIsRunning = false;
             cout << "collided" << endl;
         }
         if(CheckCollision(Xship, Yship, x3, y3))
         {
-            delete asteroid1;
-            delete asteroid2;
-            delete asteroid3;
-            delete asteroid4;
             GameIsRunning = false;
             cout << "collided" << endl;
         }
         if(CheckCollision(Xship, Yship, x4, y4))
         {
-            delete asteroid1;
-            delete asteroid2;
-            delete asteroid3;
-            delete asteroid4;
             GameIsRunning = false;
             cout << "collided" << endl;
         }
