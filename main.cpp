@@ -6,13 +6,15 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
+#include <time.h>
 #include "SDL_utils.h"
 #include "Entity.h"
 #include "GameMechanic.h"
 
 using namespace std;
 
-void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4);
+void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4
+                   , Entity& Shield, bool ShieldUp);
 
 int main(int argc, char* argv[])
 {
@@ -32,6 +34,8 @@ int main(int argc, char* argv[])
     Mix_Music *Theme = NULL;
     Theme = Mix_LoadMUS("PurpleRain.mp3");
     // generate value
+    //shield time
+    const int DisappearTime = 9;//9sec
     //int step = 7;
     bool GameIsRunning = true;
     bool QuitGame = true;
@@ -54,6 +58,10 @@ int main(int argc, char* argv[])
     int y4 = (rand() % 696) + 1;
     //music
     Mix_PlayMusic(Theme, 30);
+    //shield
+    int xShield = (rand() % 1400) + 1;
+    int yShield = (rand() % 696) + 1;
+    clock_t StartTime = clock();
 
     while(GameIsRunning)
     {
@@ -71,6 +79,10 @@ int main(int argc, char* argv[])
         ShipPhoto = spaceship;
         Entity Ship(Xship, Yship, ShipPhoto);
         Ship.type = "ship";
+        //shield related
+        Entity *Shield = new Entity(xShield, yShield, barrier);
+        Shield->type = "Shield";
+        int TimeSpawn = (rand() % 10) + 20;
 
         // Nếu không có sự kiện gì thì tiếp tục trở về đầu vòng lặp
           while( SDL_PollEvent(&e) != 0 ){
@@ -106,11 +118,14 @@ int main(int argc, char* argv[])
         x2 -= 8;
         x3 += 8;
         x4 -= 8;
-        refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4);
+        //shield
+        clock_t ElapsedTime = clock() - StartTime;
+        refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4, *Shield, ShieldSpawn(ElapsedTime, TimeSpawn));
         delete asteroid1;
         delete asteroid2;
         delete asteroid3;
         delete asteroid4;
+        delete Shield;
         if(x1 >= 1500)
         {
             x1 = -(rand() % 600) + 1;;
@@ -174,13 +189,17 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4)
+void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4
+                    , Entity& Shield, bool ShieldUp)
 {
     SDL_RenderClear(renderer);
 
 
     SDL_RenderCopy(renderer, background, NULL, NULL);
     // ve background
+
+    if(ShieldUp) render(Shield, renderer);
+    // ve shield
 
     render(Ship, renderer);
     // ve vat the con tau
