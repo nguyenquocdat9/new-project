@@ -14,7 +14,7 @@
 using namespace std;
 
 void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4
-                   , Entity& Shield, bool ShieldUp);
+                   , Entity& Shield, bool ShieldUp, bool ShieldDisappear);
 
 int main(int argc, char* argv[])
 {
@@ -32,10 +32,12 @@ int main(int argc, char* argv[])
     //music
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
     Mix_Music *Theme = NULL;
-    Theme = Mix_LoadMUS("PurpleRain.mp3");
+    Theme = Mix_LoadMUS("music/Airborne_Robots.mp3");
     // generate value
-    //shield time
-    const int DisappearTime = 9;//9sec
+    //shield
+    int TimeSpawn = 20;
+    int DisappearTime = 25;//5sec
+
     //int step = 7;
     bool GameIsRunning = true;
     bool QuitGame = true;
@@ -59,9 +61,10 @@ int main(int argc, char* argv[])
     //music
     Mix_PlayMusic(Theme, 30);
     //shield
+    clock_t StartTime = clock();
     int xShield = (rand() % 1400) + 1;
     int yShield = (rand() % 696) + 1;
-    clock_t StartTime = clock();
+
 
     while(GameIsRunning)
     {
@@ -82,7 +85,6 @@ int main(int argc, char* argv[])
         //shield related
         Entity *Shield = new Entity(xShield, yShield, barrier);
         Shield->type = "Shield";
-        int TimeSpawn = (rand() % 10) + 20;
 
         // Nếu không có sự kiện gì thì tiếp tục trở về đầu vòng lặp
           while( SDL_PollEvent(&e) != 0 ){
@@ -119,8 +121,18 @@ int main(int argc, char* argv[])
         x3 += 8;
         x4 -= 8;
         //shield
-        clock_t ElapsedTime = clock() - StartTime;
-        refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4, *Shield, ShieldSpawn(ElapsedTime, TimeSpawn));
+        clock_t SpawnElapsedTime = clock() - StartTime;
+        clock_t DisapperElapsedTime = clock() - StartTime;
+
+        refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4, *Shield, ShieldTimer(SpawnElapsedTime, TimeSpawn)
+                      , ShieldTimer(DisapperElapsedTime, DisappearTime));
+        if(ShieldTimer(DisapperElapsedTime, DisappearTime))
+        {
+            xShield = (rand() % 1400) + 1;
+            yShield = (rand() % 696) + 1;
+            StartTime = clock();
+        }
+        //delete all dynamic variable
         delete asteroid1;
         delete asteroid2;
         delete asteroid3;
@@ -128,7 +140,7 @@ int main(int argc, char* argv[])
         delete Shield;
         if(x1 >= 1500)
         {
-            x1 = -(rand() % 600) + 1;;
+            x1 = -(rand() % 600) + 1;
             y1 = (rand() % 696) + 1;
         }
         if(x2 <= 0)
@@ -190,7 +202,7 @@ int main(int argc, char* argv[])
 }
 
 void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4
-                    , Entity& Shield, bool ShieldUp)
+                    , Entity& Shield, bool ShieldUp, bool ShieldDisappear)
 {
     SDL_RenderClear(renderer);
 
@@ -198,7 +210,7 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* back
     SDL_RenderCopy(renderer, background, NULL, NULL);
     // ve background
 
-    if(ShieldUp) render(Shield, renderer);
+    if(ShieldUp && ShieldDisappear == false) render(Shield, renderer);
     // ve shield
 
     render(Ship, renderer);

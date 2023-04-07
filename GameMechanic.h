@@ -14,7 +14,7 @@ bool CheckCollision(int x1, int y1, int x2, int y2);
 
 bool ShieldObtained(int Xship, int Yship, int xShield, int yShield);
 
-bool ShieldSpawn(clock_t ElapsedTime, int TimeSpawn);
+bool ShieldTimer(clock_t ElapsedTime, int TimeSpawn);
 
 
 #endif // MECHANIC_H

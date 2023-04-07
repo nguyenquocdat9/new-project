@@ -69,18 +69,18 @@
 	<SDL_image.h>
 	<string>
 
-1680798188 source:d:\code\survive\gamemechanic.cpp
+1680858274 source:d:\code\survive\gamemechanic.cpp
 	<SDL.h>
 	<SDL_image.h>
 	"GameMechanic.h"
 
-1680798458 d:\code\survive\gamemechanic.h
+1680858274 d:\code\survive\gamemechanic.h
 	<iostream>
 	<cstdlib>
 	<ctime>
 	<time.h>
 
-1680798458 source:d:\code\survive\main.cpp
+1680882565 source:d:\code\survive\main.cpp
 	<iostream>
 	<SDL.h>
 	<iostream>

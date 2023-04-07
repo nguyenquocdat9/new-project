@@ -27,7 +27,7 @@ bool ShieldObtained(int Xship, int Yship, int xShield, int yShield)
     else return false;
 }
 
-bool ShieldSpawn(clock_t ElapsedTime, int TimeSpawn)
+bool ShieldTimer(clock_t ElapsedTime, int TimeSpawn)
 {
     if(ElapsedTime / CLK_TCK >= TimeSpawn) return true;
     else return false;
