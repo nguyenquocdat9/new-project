@@ -35,11 +35,13 @@ int main(int argc, char* argv[])
     Theme = Mix_LoadMUS("music/Airborne_Robots.mp3");
     // generate value
     //shield
-    int TimeSpawn = 20;
+    int TimeSpawn = 20; // 20sec
     int DisappearTime = 25;//5sec
     int FadingTime = 5; // shield time 5sec
 
-    //int step = 7
+    // game tempo
+    int speed = 8;
+
     bool GameIsRunning = true;
     bool QuitGame = true;
     SDL_Event e;
@@ -66,7 +68,9 @@ int main(int argc, char* argv[])
     clock_t ShieldStartTime = 0;
     int xShield = (rand() % 1400) + 1;
     int yShield = (rand() % 696) + 1;
-    int HitPoint = 0;
+    bool Invulnerable = false;
+    //game tempo
+    clock_t SpeedupTime = clock();
     //ship
     ShipPhoto = spaceship;
 
@@ -120,10 +124,6 @@ int main(int argc, char* argv[])
               SDL_GetMouseState(&Xship, &Yship);
           }
         }
-        x1 += 8;
-        x2 -= 8;
-        x3 += 8;
-        x4 -= 8;
         //shield
         clock_t SpawnElapsedTime = clock() - StartTime;
         clock_t DisappearElapsedTime = clock() - StartTime;
@@ -137,13 +137,16 @@ int main(int argc, char* argv[])
                 yShield = (rand() % 696) + 1;
                 StartTime = clock();
                 ShieldStartTime = clock();
+                Invulnerable = true;
             }
         }
         clock_t FadingElapsedTime = clock() - ShieldStartTime;
         if(ShieldTimer(FadingElapsedTime, FadingTime))
         {
             ShipPhoto = spaceship;
+            Invulnerable = false;
         }
+
 
         refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4, *Shield, ShieldTimer(SpawnElapsedTime, TimeSpawn)
                       , ShieldTimer(DisappearElapsedTime, DisappearTime), ShieldObtained(Xship, Yship, xShield, yShield));
@@ -160,12 +163,24 @@ int main(int argc, char* argv[])
         delete asteroid3;
         delete asteroid4;
         delete Shield;
+
+        // object
+        clock_t SpeedUpElapsed = clock() - SpeedupTime;
+        if(ShieldTimer(SpeedUpElapsed, DisappearTime))
+        {
+            speed += 2;
+            SpeedupTime = clock();
+        }
+        x1 += speed;
+        x2 -= speed;
+        x3 += speed;
+        x4 -= speed;
         if(x1 >= 1500)
         {
             x1 = -(rand() % 600) + 1;
             y1 = (rand() % 696) + 1;
         }
-        if(x2 <= 0)
+        if(x2 <= -100)
         {
             x2 = (rand() % 600) + 1501;
             y2 = (rand() % 696) + 1;
@@ -175,30 +190,42 @@ int main(int argc, char* argv[])
             x3 = -(rand() % 600) + 1;;
             y3 = (rand() % 696) + 1;
         }
-        if(x4 <= 0)
+        if(x4 <= -100)
         {
             x4 = (rand() % 600) + 1501;
             y4 = (rand() % 696) + 1;
         }
         if(CheckCollision(Xship, Yship, x1, y1))
         {
-            GameIsRunning = false;
-            cout << "collided" << endl;
+            if(Invulnerable == false)
+            {
+                GameIsRunning = false;
+                cout << "collided" << endl;
+            }
         }
         if(CheckCollision(Xship, Yship, x2, y2))
         {
-            GameIsRunning = false;
-            cout << "collided" << endl;
+            if(Invulnerable == false)
+            {
+                GameIsRunning = false;
+                cout << "collided" << endl;
+            }
         }
         if(CheckCollision(Xship, Yship, x3, y3))
         {
-            GameIsRunning = false;
-            cout << "collided" << endl;
+            if(Invulnerable == false)
+            {
+                GameIsRunning = false;
+                cout << "collided" << endl;
+            }
         }
         if(CheckCollision(Xship, Yship, x4, y4))
         {
-            GameIsRunning = false;
-            cout << "collided" << endl;
+            if(Invulnerable == false)
+            {
+                GameIsRunning = false;
+                cout << "collided" << endl;
+            }
         }
 
         //FPS stabilizer
@@ -230,17 +257,19 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* back
 
 
     SDL_RenderCopy(renderer, background, NULL, NULL);
-    // ve background
+    // render background
 
     if(ShieldUp && ShieldDisappear == false && ShieldGot == false) render(Shield, renderer);
-    // ve shield
+    // render shield
 
-    render(Ship, renderer);
-    // ve vat the con tau
     render(asteroid1,renderer);
     render(asteroid2,renderer);
     render(asteroid3,renderer);
     render(asteroid4,renderer);
+    //render obstacle
+
+    render(Ship, renderer);
+    // render ship
     SDL_RenderPresent(renderer);
     // hien thi man hinh
 }

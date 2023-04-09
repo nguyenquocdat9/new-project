@@ -2,38 +2,6 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="Entity.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="619" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="5430" topLine="123" />
-		</Cursor>
-		<Folding>
-			<Collapse line="163" />
-			<Collapse line="168" />
-			<Collapse line="173" />
-			<Collapse line="178" />
-			<Collapse line="211" />
-		</Folding>
-	</File>
-	<File name="GameMechanic.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="354" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="Entity.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="353" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="SDL_utils.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="710" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="SDL_utils.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="1" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="887" topLine="0" />
@@ -43,9 +11,51 @@
 			<Collapse line="43" />
 		</Folding>
 	</File>
+	<File name="Entity.cpp" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="619" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6514" topLine="150" />
+		</Cursor>
+		<Folding>
+			<Collapse line="101" />
+			<Collapse line="122" />
+			<Collapse line="131" />
+			<Collapse line="144" />
+			<Collapse line="178" />
+			<Collapse line="183" />
+			<Collapse line="188" />
+			<Collapse line="193" />
+			<Collapse line="198" />
+			<Collapse line="206" />
+			<Collapse line="214" />
+			<Collapse line="222" />
+			<Collapse line="238" />
+			<Collapse line="252" />
+			<Collapse line="254" />
+		</Folding>
+	</File>
 	<File name="GameMechanic.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="675" topLine="6" />
+		</Cursor>
+	</File>
+	<File name="SDL_utils.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="710" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="GameMechanic.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="395" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="Entity.h" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="353" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
