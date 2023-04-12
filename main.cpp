@@ -39,9 +39,6 @@ int main(int argc, char* argv[])
     int DisappearTime = 25;//5sec
     int FadingTime = 5; // shield time 5sec
 
-    // game tempo
-    int speed = 8;
-
     bool GameIsRunning = true;
     bool QuitGame = true;
     SDL_Event e;
@@ -70,6 +67,7 @@ int main(int argc, char* argv[])
     int yShield = (rand() % 696) + 1;
     bool Invulnerable = false;
     //game tempo
+    int speed = 8;
     clock_t SpeedupTime = clock();
     //ship
     ShipPhoto = spaceship;
