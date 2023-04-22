@@ -22,6 +22,7 @@ int main(int argc, char* argv[])
     SDL_Renderer* renderer;
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SDL_Texture* background = loadTexture("image/background.jpg", renderer);
+    SDL_Texture* mainmenu = loadTexture("image/mainmenu.jpg", renderer);
     SDL_Texture* obstacle = loadTexture("image/meteor.png", renderer);
     //spaceship related
     SDL_Texture* barrier = loadTexture("image/shield.png", renderer);
@@ -31,10 +32,7 @@ int main(int argc, char* argv[])
     SDL_Texture* buff = loadTexture("image/slow.png", renderer);
     //menu
     SDL_Texture* GameOverScreen = loadTexture("image/gameover.jpg", renderer);
-    //music
-    Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
-    Mix_Music *Theme = NULL;
-    Theme = Mix_LoadMUS("music/Airborne_Robots.mp3");
+
     // generate value
     //shield
     int TimeSpawn = 20; // 20sec
@@ -44,9 +42,12 @@ int main(int argc, char* argv[])
     int TimeSpawnBuff = 40;//40 sec
     int BuffDisappearTime = 45;//5 sec
 
-    bool GameIsRunning = true;
+    //
+    bool GameIsRunning = false;
     bool QuitGame = false;
     bool MainMenuOn = true;
+    bool GameOverOn = false;
+
     SDL_Event e;
     srand((unsigned int) time(NULL));
     SDL_Texture* ShipPhoto;
@@ -56,16 +57,14 @@ int main(int argc, char* argv[])
     // 1, 3 spawn trai
     // 2, 4 spawn phai
     int Xship = SCREEN_WIDTH / 2, Yship = SCREEN_HEIGHT / 2;
-    int x1 = -(rand() % 600) + 1;
+    int x1 = -(rand() % 600) - 200;
     int y1 = (rand() % 696) + 1;
-    int x2 = (rand() % 600) + 1501;
+    int x2 = (rand() % 600) + 1701;
     int y2 = (rand() % 696) + 1;
-    int x3 = -(rand() % 600) + 1;
+    int x3 = -(rand() % 600) - 200;
     int y3 = (rand() % 696) + 1;
-    int x4 = (rand() % 600) + 1501;
+    int x4 = (rand() % 600) + 1701;
     int y4 = (rand() % 696) + 1;
-    //music
-    Mix_PlayMusic(Theme, 30);
     //shield
     clock_t StartTime = clock();
     clock_t ShieldStartTime = 0;
@@ -82,8 +81,36 @@ int main(int argc, char* argv[])
     //ship
     ShipPhoto = spaceship;
 
-
-
+    while(MainMenuOn)
+    {
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, mainmenu, NULL, NULL);
+        SDL_RenderPresent(renderer);
+        while(SDL_PollEvent(&e) != 0)
+        {
+            if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+            {
+                if(e.button.x >= 640 && e.button.x <= 865 && e.button.y >= 260 && e.button.y <= 320) // PLAY Button
+                {
+                    GameIsRunning = true;
+                    MainMenuOn = false;
+                }
+                if(e.button.x >= 645 && e.button.x <= 850 && e.button.y >= 495 && e.button.y <= 550) // QUIT Button
+                {
+                    QuitGame = true;
+                    MainMenuOn = false;
+                }
+            }
+        }
+    }
+    //music
+    if(GameIsRunning)
+    {
+        Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
+        Mix_Music *Theme = NULL;
+        Theme = Mix_LoadMUS("music/Airborne_Robots.mp3");
+        Mix_PlayMusic(Theme, 30);
+    }
     while(GameIsRunning)
     {
         int start = SDL_GetTicks();
@@ -109,7 +136,11 @@ int main(int argc, char* argv[])
         // Nếu không có sự kiện gì thì tiếp tục trở về đầu vòng lặp
           while( SDL_PollEvent(&e) != 0 ){
         // Nếu sự kiện là kết thúc (như đóng cửa sổ) thì thoát khỏi vòng lặp
-          if (e.type == SDL_QUIT) GameIsRunning = false;
+          if (e.type == SDL_QUIT)
+          {
+              GameIsRunning = false;
+              QuitGame = true;
+          }
         // Nếu có một phím được nhấn, thì xét phím đó là gì để xử lý tiếp
           /*if (e.type == SDL_KEYDOWN) {
         	switch (e.key.keysym.sym) {
@@ -267,22 +298,41 @@ int main(int argc, char* argv[])
         int delta = SDL_GetTicks() - start;
         if(delta < DELTA) SDL_Delay(DELTA - delta);
     }
-
-    SDL_RenderClear(renderer);
     //Game Over Screen
-    SDL_RenderCopy(renderer, GameOverScreen, NULL, NULL);
-    SDL_RenderPresent(renderer);
-    while(SDL_PollEvent(&e) != 0)
+    if(!GameIsRunning && !QuitGame)
     {
-        if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+        Mix_CloseAudio();
+        GameOverOn = true;
+    }
+    while(GameOverOn)
+    {
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, GameOverScreen, NULL, NULL);
+        SDL_RenderPresent(renderer);
+        while(SDL_PollEvent(&e) != 0)
         {
-           if(e.button.x >= 609 && e.button.x <= 895 && e.button.y >= 490 && e.button.y <= 575) GameIsRunning = true; // play again
-           else if(e.button.x >= 609 && e.button.x <= 895 && e.button.y >= 691 && e.button.y <= 772) QuitGame = true; // quit game
+            if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+            {
+                if(e.button.x >= 609 && e.button.x <= 895 && e.button.y >= 490 && e.button.y <= 575) // button PLAY AGAIN 609 -> 895 ; 490 -> 575
+                {
+                    GameOverOn = false;
+                    GameIsRunning = true;
+                }
+                if(e.button.x >= 609 && e.button.x <= 895 && e.button.y >= 691 && e.button.y <= 772) // button QUIT GAME 609 -> 895 ; 691 -> 772
+                {
+                    GameOverOn = false;
+                    QuitGame = true;
+                }
+                if(e.button.x >= 609 && e.button.x <= 895 && e.button.y >= 585 && e.button.y <= 675) // button MAIN MENU button QUIT GAME 609 ; 585 -> 675
+                {
+                    GameOverOn = false;
+                    MainMenuOn = true;
+                }
+            }
         }
     }
   }
-    // button QUIT GAME 609 -> 895 ; 691 -> 772
-    // button PLAY AGAIN 609 -> 895 ; 490 -> 575
+
     quitSDL(window, renderer);
     return 0;
 }

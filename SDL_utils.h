@@ -17,8 +17,7 @@ const int SCREEN_WIDTH = 1500;
 const int SCREEN_HEIGHT = 800;
 const char WINDOW_TITLE[] = "Survive";
 
-void logSDLError(std::ostream& os,
-                 const std::string &msg, bool fatal);
+void logSDLError(std::ostream& os, const std::string &msg, bool fatal);
 
 void initSDL(SDL_Window* &window, SDL_Renderer* &renderer1, int screenWidth, int screenHeight, const char* windowTitle) ;
 
