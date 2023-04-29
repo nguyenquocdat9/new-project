@@ -23,6 +23,7 @@ int main(int argc, char* argv[])
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SDL_Texture* background = loadTexture("image/background.jpg", renderer);
     SDL_Texture* mainmenu = loadTexture("image/mainmenu.jpg", renderer);
+    SDL_Texture* setting = loadTexture("image/setting.jpg", renderer);
     SDL_Texture* obstacle = loadTexture("image/meteor.png", renderer);
     //spaceship related
     SDL_Texture* barrier = loadTexture("image/shield.png", renderer);
@@ -46,6 +47,7 @@ int main(int argc, char* argv[])
     bool GameIsRunning = false;
     bool QuitGame = false;
     bool MainMenuOn = true;
+    bool SettingOn = false;
     bool GameOverOn = false;
 
     SDL_Event e;
@@ -100,8 +102,31 @@ int main(int argc, char* argv[])
                     QuitGame = true;
                     MainMenuOn = false;
                 }
+                if(e.button.x >= 555 && e.button.x <= 945 && e.button.y >= 380 && e.button.y <= 445) // SETTING Button
+                {
+                    SettingOn = true;
+                    MainMenuOn = false;
+                }
             }
         }
+    }
+    while(SettingOn)
+    {
+        SDL_RenderClear(renderer);
+        SDL_RenderCopy(renderer, setting, NULL, NULL);
+        SDL_RenderPresent(renderer);
+        while(SDL_PollEvent(&e) != 0)
+        {
+            if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+            {
+                if(e.button.x >= 0 && e.button.x <= 300 && e.button.y >= 735 && e.button.y <= 800) // BACK Button
+                {
+                    SettingOn = false;
+                    MainMenuOn = true;
+                }
+            }
+        }
+
     }
     //music
     if(GameIsRunning)
@@ -299,7 +324,7 @@ int main(int argc, char* argv[])
         if(delta < DELTA) SDL_Delay(DELTA - delta);
     }
     //Game Over Screen
-    if(!GameIsRunning && !QuitGame)
+    if(!GameIsRunning && !QuitGame && !MainMenuOn)
     {
         Mix_CloseAudio();
         GameOverOn = true;
