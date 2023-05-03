@@ -120,7 +120,6 @@ int main(int argc, char* argv[])
     clock_t BuffStartTime = clock();
     int xBuff= (rand() % 1400) + 1;
     int yBuff = (rand() % 696) + 1;
-
     //setting
     setting = Ship1Mus1;
 
@@ -267,7 +266,15 @@ int main(int argc, char* argv[])
     {
         Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 4096);
         Mix_Music *Theme = NULL;
-        Theme = Mix_LoadMUS("music/Airborne_Robots.mp3");
+        if(PickMus == 1)Theme = Mix_LoadMUS("music/PurpleRain.mp3");
+        else if(PickMus == 2)Theme = Mix_LoadMUS("music/Granite.mp3");
+        else if(PickMus == 3)Theme = Mix_LoadMUS("music/Starfall.mp3");
+        else if(PickMus == 4)Theme = Mix_LoadMUS("music/Airborne_Robots.mp3");
+        else if(PickMus == 5)Theme = Mix_LoadMUS("music/[Electro] Nitro Fun - Cheat Codes [Monstercat Release].mp3");
+        else if(PickMus == 6)Theme = Mix_LoadMUS("music/DJVI - Back On Track.mp3");
+        else if(PickMus == 7)Theme = Mix_LoadMUS("music/still yearning.mp3");
+        else if(PickMus == 8)Theme = Mix_LoadMUS("music/Sol.mp3");
+        else if(PickMus == 9)Theme = Mix_LoadMUS("music/Mt. Gael.mp3");
         Mix_PlayMusic(Theme, 30);
     }
     while(GameIsRunning)
