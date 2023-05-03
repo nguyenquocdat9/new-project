@@ -10,7 +10,7 @@ bool CheckColisionAxisX(int x1, int x2)
 
 bool CheckColisionAxisY(int y1, int y2)
 {
-    if(abs(y2 - y1) < 90) return true;
+    if(abs(y2 - y1) < 80) return true;
     else return false;
 }
 

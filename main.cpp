@@ -23,12 +23,45 @@ int main(int argc, char* argv[])
     initSDL(window, renderer, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_TITLE);
     SDL_Texture* background = loadTexture("image/background.jpg", renderer);
     SDL_Texture* mainmenu = loadTexture("image/mainmenu.jpg", renderer);
-    SDL_Texture* setting = loadTexture("image/setting.jpg", renderer);
+    //setting
+    int PickShip = 1, PickMus = 1;
+    SDL_Texture* Ship1Mus1 = loadTexture("image/option/ship1mus1.jpg", renderer);
+    SDL_Texture* Ship1Mus2 = loadTexture("image/option/ship1mus2.jpg", renderer);
+    SDL_Texture* Ship1Mus3 = loadTexture("image/option/ship1mus3.jpg", renderer);
+    SDL_Texture* Ship1Mus4 = loadTexture("image/option/ship1mus4.jpg", renderer);
+    SDL_Texture* Ship1Mus5 = loadTexture("image/option/ship1mus5.jpg", renderer);
+    SDL_Texture* Ship1Mus6 = loadTexture("image/option/ship1mus6.jpg", renderer);
+    SDL_Texture* Ship1Mus7 = loadTexture("image/option/ship1mus7.jpg", renderer);
+    SDL_Texture* Ship1Mus8 = loadTexture("image/option/ship1mus8.jpg", renderer);
+    SDL_Texture* Ship1Mus9 = loadTexture("image/option/ship1mus9.jpg", renderer);
+    SDL_Texture* Ship2Mus1 = loadTexture("image/option/ship2mus1.jpg", renderer);
+    SDL_Texture* Ship2Mus2 = loadTexture("image/option/ship2mus2.jpg", renderer);
+    SDL_Texture* Ship2Mus3 = loadTexture("image/option/ship2mus3.jpg", renderer);
+    SDL_Texture* Ship2Mus4 = loadTexture("image/option/ship2mus4.jpg", renderer);
+    SDL_Texture* Ship2Mus5 = loadTexture("image/option/ship2mus5.jpg", renderer);
+    SDL_Texture* Ship2Mus6 = loadTexture("image/option/ship2mus6.jpg", renderer);
+    SDL_Texture* Ship2Mus7 = loadTexture("image/option/ship2mus7.jpg", renderer);
+    SDL_Texture* Ship2Mus8 = loadTexture("image/option/ship2mus8.jpg", renderer);
+    SDL_Texture* Ship2Mus9 = loadTexture("image/option/ship2mus9.jpg", renderer);
+    SDL_Texture* Ship3Mus1 = loadTexture("image/option/ship3mus1.jpg", renderer);
+    SDL_Texture* Ship3Mus2 = loadTexture("image/option/ship3mus2.jpg", renderer);
+    SDL_Texture* Ship3Mus3 = loadTexture("image/option/ship3mus3.jpg", renderer);
+    SDL_Texture* Ship3Mus4 = loadTexture("image/option/ship3mus4.jpg", renderer);
+    SDL_Texture* Ship3Mus5 = loadTexture("image/option/ship3mus5.jpg", renderer);
+    SDL_Texture* Ship3Mus6 = loadTexture("image/option/ship3mus6.jpg", renderer);
+    SDL_Texture* Ship3Mus7 = loadTexture("image/option/ship3mus7.jpg", renderer);
+    SDL_Texture* Ship3Mus8 = loadTexture("image/option/ship3mus8.jpg", renderer);
+    SDL_Texture* Ship3Mus9 = loadTexture("image/option/ship3mus9.jpg", renderer);
+    //obstacle
     SDL_Texture* obstacle = loadTexture("image/meteor.png", renderer);
     //spaceship related
     SDL_Texture* barrier = loadTexture("image/shield.png", renderer);
-    SDL_Texture* spaceship = loadTexture("image/spaceship.png", renderer);
-    SDL_Texture* spaceshipShield = loadTexture("image/spaceshipwithshield.png", renderer);
+    SDL_Texture* spaceship1 = loadTexture("image/ship/spaceship1.png", renderer);
+    SDL_Texture* spaceship1Shield = loadTexture("image/ship/spaceship1withshield.png", renderer);
+    SDL_Texture* spaceship2 = loadTexture("image/ship/spaceship2.png", renderer);
+    SDL_Texture* spaceship2Shield = loadTexture("image/ship/spaceship2withshield.png", renderer);
+    SDL_Texture* spaceship3 = loadTexture("image/ship/spaceship3.png", renderer);
+    SDL_Texture* spaceship3Shield = loadTexture("image/ship/spaceship3withshield.png", renderer);
     //buff
     SDL_Texture* buff = loadTexture("image/slow.png", renderer);
     //menu
@@ -52,7 +85,14 @@ int main(int argc, char* argv[])
 
     SDL_Event e;
     srand((unsigned int) time(NULL));
+    //ship
     SDL_Texture* ShipPhoto;
+    SDL_Texture* ShipShieldPhoto;
+    SDL_Texture* NorShip;
+    ShipShieldPhoto = spaceship1Shield;
+    NorShip = spaceship1;
+    //setting
+    SDL_Texture* setting;
 
   while(!QuitGame)
   {
@@ -80,8 +120,9 @@ int main(int argc, char* argv[])
     clock_t BuffStartTime = clock();
     int xBuff= (rand() % 1400) + 1;
     int yBuff = (rand() % 696) + 1;
-    //ship
-    ShipPhoto = spaceship;
+
+    //setting
+    setting = Ship1Mus1;
 
     while(MainMenuOn)
     {
@@ -119,15 +160,108 @@ int main(int argc, char* argv[])
         {
             if(e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
             {
-                if(e.button.x >= 0 && e.button.x <= 300 && e.button.y >= 735 && e.button.y <= 800) // BACK Button
+                if(e.button.x >= 0 && e.button.x <= 190 && e.button.y >= 735 && e.button.y <= 800) // BACK Button
                 {
                     SettingOn = false;
                     MainMenuOn = true;
                 }
+                if(e.button.x >= 348 && e.button.x <= 580 && e.button.y >= 400 && e.button.y <= 650)
+                {
+                    PickShip = 1;
+                    NorShip = spaceship1;
+                    ShipShieldPhoto = spaceship1Shield;
+                }
+                if(e.button.x >= 750 && e.button.x <= 985 && e.button.y >= 400 && e.button.y <= 645)
+                {
+                    PickShip = 2;
+                    NorShip = spaceship2;
+                    ShipShieldPhoto = spaceship2Shield;
+                }
+                if(e.button.x >= 1150 && e.button.x <= 1350 && e.button.y >= 400 && e.button.y <= 645)
+                {
+                    PickShip = 3;
+                    NorShip = spaceship3;
+                    ShipShieldPhoto = spaceship3Shield;
+                }
+                if(e.button.x >= 255 && e.button.x <= 640 && e.button.y >= 10 && e.button.y <= 50)
+                {
+                    PickMus = 1;
+                }
+                if(e.button.x >= 695 && e.button.x <= 1080 && e.button.y >= 10 && e.button.y <= 50)
+                {
+                    PickMus = 2;
+                }
+                if(e.button.x >= 1120 && e.button.x <= 1500 && e.button.y >= 10 && e.button.y <= 50)
+                {
+                    PickMus = 3;
+                }
+                if(e.button.x >= 255 && e.button.x <= 640 && e.button.y >= 120 && e.button.y <= 160)
+                {
+                    PickMus = 4;
+                }
+                if(e.button.x >= 695 && e.button.x <= 1080 && e.button.y >= 120 && e.button.y <= 160)
+                {
+                    PickMus = 5;
+                }
+                if(e.button.x >= 1120 && e.button.x <= 1500 && e.button.y >= 120 && e.button.y <= 160)
+                {
+                    PickMus = 6;
+                }
+                if(e.button.x >= 255 && e.button.x <= 640 && e.button.y >= 230 && e.button.y <= 260)
+                {
+                    PickMus = 7;
+                }
+                if(e.button.x >= 695 && e.button.x <= 1080 && e.button.y >= 230 && e.button.y <= 260)
+                {
+                    PickMus = 8;
+                }
+                if(e.button.x >= 1120 && e.button.x <= 1500 && e.button.y >= 230 && e.button.y <= 260)
+                {
+                    PickMus = 9;
+                }
             }
+        if(PickShip == 1)
+        {
+            if(PickMus == 1)setting = Ship1Mus1;
+            else if(PickMus == 2)setting = Ship1Mus2;
+            else if(PickMus == 3)setting = Ship1Mus3;
+            else if(PickMus == 4)setting = Ship1Mus4;
+            else if(PickMus == 5)setting = Ship1Mus5;
+            else if(PickMus == 6)setting = Ship1Mus6;
+            else if(PickMus == 7)setting = Ship1Mus7;
+            else if(PickMus == 8)setting = Ship1Mus8;
+            else if(PickMus == 9)setting = Ship1Mus9;
+        }
+        else if(PickShip == 2)
+        {
+            if(PickMus == 1)setting = Ship2Mus1;
+            else if(PickMus == 2)setting = Ship2Mus2;
+            else if(PickMus == 3)setting = Ship2Mus3;
+            else if(PickMus == 4)setting = Ship2Mus4;
+            else if(PickMus == 5)setting = Ship2Mus5;
+            else if(PickMus == 6)setting = Ship2Mus6;
+            else if(PickMus == 7)setting = Ship2Mus7;
+            else if(PickMus == 8)setting = Ship2Mus8;
+            else if(PickMus == 9)setting = Ship2Mus9;
+        }
+        else if(PickShip == 3)
+        {
+            if(PickMus == 1)setting = Ship3Mus1;
+            else if(PickMus == 2)setting = Ship3Mus2;
+            else if(PickMus == 3)setting = Ship3Mus3;
+            else if(PickMus == 4)setting = Ship3Mus4;
+            else if(PickMus == 5)setting = Ship3Mus5;
+            else if(PickMus == 6)setting = Ship3Mus6;
+            else if(PickMus == 7)setting = Ship3Mus7;
+            else if(PickMus == 8)setting = Ship3Mus8;
+            else if(PickMus == 9)setting = Ship3Mus9;
+        }
         }
 
+
     }
+    //ship
+    ShipPhoto = NorShip;
     //music
     if(GameIsRunning)
     {
@@ -200,7 +334,7 @@ int main(int argc, char* argv[])
         {
             if(ShieldObtained(Xship, Yship, xShield, yShield))
             {
-                ShipPhoto = spaceshipShield;
+                ShipPhoto = ShipShieldPhoto;
                 xShield = (rand() % 1400) + 1;
                 yShield = (rand() % 696) + 1;
                 StartTime = clock();
@@ -211,7 +345,7 @@ int main(int argc, char* argv[])
         clock_t FadingElapsedTime = clock() - ShieldStartTime;
         if(ShieldTimer(FadingElapsedTime, FadingTime))
         {
-            ShipPhoto = spaceship;
+            ShipPhoto = NorShip;
             Invulnerable = false;
         }
         //buff

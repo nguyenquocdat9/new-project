@@ -11,7 +11,7 @@ Entity::Entity(float p_x, float p_y, SDL_Texture* p_tex)
     CurrentFrame.x = 0;
     CurrentFrame.y = 0;
     CurrentFrame.w = 100;
-    CurrentFrame.h = 104;
+    CurrentFrame.h = 100;
 
 }
 float Entity::GetX()
