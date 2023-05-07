@@ -14,7 +14,7 @@
 using namespace std;
 
 void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4
-                   , Entity& Shield, bool ShieldUp, bool ShieldDisappear, bool ShieldGot, Entity& Buff, bool BuffUp, bool BuffDisappear, bool BuffGot);
+                   , Entity& asteroid5, Entity& asteroid6, bool MoreObj, Entity& Shield, bool ShieldUp, bool ShieldDisappear, bool ShieldGot, Entity& Buff, bool BuffUp, bool BuffDisappear, bool BuffGot);
 
 int main(int argc, char* argv[])
 {
@@ -53,7 +53,8 @@ int main(int argc, char* argv[])
     SDL_Texture* Ship3Mus8 = loadTexture("image/option/ship3mus8.jpg", renderer);
     SDL_Texture* Ship3Mus9 = loadTexture("image/option/ship3mus9.jpg", renderer);
     //obstacle
-    SDL_Texture* obstacle = loadTexture("image/meteor.png", renderer);
+    SDL_Texture* obstacle1 = loadTexture("image/meteor1.png", renderer);
+    SDL_Texture* obstacle2 = loadTexture("image/meteor2.png", renderer);
     //spaceship related
     SDL_Texture* barrier = loadTexture("image/shield.png", renderer);
     SDL_Texture* spaceship1 = loadTexture("image/ship/spaceship1.png", renderer);
@@ -93,6 +94,8 @@ int main(int argc, char* argv[])
     NorShip = spaceship1;
     //setting
     SDL_Texture* setting;
+    //gametempo
+    int HardModeTime = 60;
 
   while(!QuitGame)
   {
@@ -100,13 +103,17 @@ int main(int argc, char* argv[])
     // 2, 4 spawn phai
     int Xship = SCREEN_WIDTH / 2, Yship = SCREEN_HEIGHT / 2;
     int x1 = -(rand() % 600) - 200;
-    int y1 = (rand() % 696) + 1;
+    int y1 = (rand() % 700) + 1;
     int x2 = (rand() % 600) + 1701;
-    int y2 = (rand() % 696) + 1;
+    int y2 = (rand() % 700) + 1;
     int x3 = -(rand() % 600) - 200;
-    int y3 = (rand() % 696) + 1;
+    int y3 = (rand() % 700) + 1;
     int x4 = (rand() % 600) + 1701;
-    int y4 = (rand() % 696) + 1;
+    int y4 = (rand() % 700) + 1;
+    int x5 = (rand() % 1400) + 1;
+    int y5 = -(rand() % 600) - 200;
+    int x6 = (rand() % 1400) + 1;
+    int y6 = (rand() % 600) + 1000;
     //shield
     clock_t StartTime = clock();
     clock_t ShieldStartTime = 0;
@@ -116,6 +123,8 @@ int main(int argc, char* argv[])
     //game tempo
     int speed = 8;
     clock_t SpeedupTime = clock();
+    clock_t AddObjTime = clock();
+    bool AddMoreObj = false;
     //buff
     clock_t BuffStartTime = clock();
     int xBuff= (rand() % 1400) + 1;
@@ -281,14 +290,18 @@ int main(int argc, char* argv[])
     {
         int start = SDL_GetTicks();
         // check if asteroid is rendered
-        Entity *asteroid1 = new Entity(x1, y1, obstacle);
+        Entity *asteroid1 = new Entity(x1, y1, obstacle1);
         asteroid1->type = "asteroid1";
-        Entity *asteroid2 = new Entity(x2, y2, obstacle);
+        Entity *asteroid2 = new Entity(x2, y2, obstacle1);
         asteroid2->type = "asteroid2";
-        Entity *asteroid3 = new Entity(x3, y3, obstacle);
+        Entity *asteroid3 = new Entity(x3, y3, obstacle1);
         asteroid3->type = "asteroid3";
-        Entity *asteroid4 = new Entity(x4, y4, obstacle);
+        Entity *asteroid4 = new Entity(x4, y4, obstacle1);
         asteroid4->type = "asteroid4";
+        Entity *asteroid5 = new Entity(x5, y5, obstacle2);
+        asteroid5->type = "asteroid5";
+        Entity *asteroid6 = new Entity(x6, y6, obstacle2);
+        asteroid6->type = "asteroid6";
         //check render spaceship
         Entity Ship(Xship, Yship, ShipPhoto);
         Ship.type = "ship";
@@ -369,7 +382,7 @@ int main(int argc, char* argv[])
             }
         }
 
-        refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4, *Shield, ShieldTimer(SpawnElapsedTime, TimeSpawn)
+        refreshScreen(window, renderer, background, Ship, *asteroid1, *asteroid2, *asteroid3, *asteroid4, *asteroid5, *asteroid6, AddMoreObj, *Shield, ShieldTimer(SpawnElapsedTime, TimeSpawn)
                       , ShieldTimer(DisappearElapsedTime, DisappearTime), ShieldObtained(Xship, Yship, xShield, yShield), *SlowBuff, ShieldTimer(BuffSpawnElapsedTime, TimeSpawnBuff)
                       , ShieldTimer(BuffSpawnElapsedTime, BuffDisappearTime), CheckCollision(Xship, Yship, xBuff, yBuff));
         //if shield not obtained after DisappearTime reset StartTime and shield location
@@ -391,6 +404,8 @@ int main(int argc, char* argv[])
         delete asteroid2;
         delete asteroid3;
         delete asteroid4;
+        delete asteroid5;
+        delete asteroid6;
         delete Shield;
         delete SlowBuff;
 
@@ -401,11 +416,21 @@ int main(int argc, char* argv[])
             speed += 2;
             SpeedupTime = clock();
         }
+        clock_t AddObjElapsed = clock() - AddObjTime;
+        if(ShieldTimer(AddObjElapsed, HardModeTime))
+        {
+            AddMoreObj = true;
+        }
         //change asteroid position
         x1 += speed;
         x2 -= speed;
         x3 += speed;
         x4 -= speed;
+        if(AddMoreObj)
+        {
+            y5 += speed;
+            y6 -= speed;
+        }
         if(x1 >= 1500)
         {
             x1 = -(rand() % 600) + 1;
@@ -425,6 +450,16 @@ int main(int argc, char* argv[])
         {
             x4 = (rand() % 600) + 1501;
             y4 = (rand() % 696) + 1;
+        }
+        if(y5 >= 800)
+        {
+            x5 = (rand() % 1400) + 1;
+            y5 = -(rand() % 600) + 1;
+        }
+        if(y6 <= -100)
+        {
+            x6 = (rand() % 1400) + 1;
+            y6 = (rand() % 600) + 801;
         }
         //check collision
         if(CheckCollision(Xship, Yship, x1, y1))
@@ -452,6 +487,22 @@ int main(int argc, char* argv[])
             }
         }
         if(CheckCollision(Xship, Yship, x4, y4))
+        {
+            if(Invulnerable == false)
+            {
+                GameIsRunning = false;
+                cout << "collided" << endl;
+            }
+        }
+        if(CheckCollision(Xship, Yship, x5, y5) && AddMoreObj)
+        {
+            if(Invulnerable == false)
+            {
+                GameIsRunning = false;
+                cout << "collided" << endl;
+            }
+        }
+        if(CheckCollision(Xship, Yship, x6, y6) && AddMoreObj)
         {
             if(Invulnerable == false)
             {
@@ -504,7 +555,7 @@ int main(int argc, char* argv[])
 }
 
 void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* background, Entity& Ship, Entity& asteroid1, Entity& asteroid2, Entity& asteroid3, Entity& asteroid4
-                    , Entity& Shield, bool ShieldUp, bool ShieldDisappear, bool ShieldGot, Entity& Buff, bool BuffUp, bool BuffDisappear, bool BuffGot)
+                    , Entity& asteroid5, Entity& asteroid6, bool MoreObj, Entity& Shield, bool ShieldUp, bool ShieldDisappear, bool ShieldGot, Entity& Buff, bool BuffUp, bool BuffDisappear, bool BuffGot)
 {
     SDL_RenderClear(renderer);
 
@@ -518,10 +569,15 @@ void refreshScreen(SDL_Window* window, SDL_Renderer* renderer, SDL_Texture* back
     if(BuffUp && BuffDisappear == false && BuffGot == false) render(Buff, renderer);
     //render buff
 
-    render(asteroid1,renderer);
-    render(asteroid2,renderer);
-    render(asteroid3,renderer);
-    render(asteroid4,renderer);
+    render(asteroid1, renderer);
+    render(asteroid2, renderer);
+    render(asteroid3, renderer);
+    render(asteroid4, renderer);
+    if(MoreObj)
+    {
+        render(asteroid5, renderer);
+        render(asteroid6, renderer);
+    }
     //render obstacle
 
     render(Ship, renderer);
