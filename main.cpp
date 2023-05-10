@@ -377,7 +377,7 @@ int main(int argc, char* argv[])
             {
                 xBuff= (rand() % 1400) + 1;
                 yBuff = (rand() % 696) + 1;
-                speed -= 3;
+                speed -= 2;
                 BuffStartTime = clock();
             }
         }
